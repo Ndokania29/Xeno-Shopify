@@ -3,6 +3,11 @@
 A production-ready, multi-tenant analytics platform for Shopify stores. It ingests products, customers, and orders, then surfaces actionable insights on revenue, funnels, inventory, and profitability. The stack is React (Vite) on the frontend and Node.js/Express with Sequelize/MySQL on the backend.
 
 ---
+## Credential to test
+
+For Log In use
+Email Id- nivesh.ecellvit@gmail.com
+Password- Nivesh123
 
 ## 1. Quick Start
 
@@ -29,6 +34,7 @@ JWT_SECRET=supersecretkey
 EMAIL_USER=youremail@gmail.com
 EMAIL_PASS=yourapppassword
 FRONTEND_URL=https://xeno-shopify-delta.vercel.app
+
 ```
 
 ### Frontend
