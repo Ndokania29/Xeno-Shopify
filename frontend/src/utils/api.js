@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const api = axios.create({
-  baseURL: '/api'
+  baseURL: `${API_BASE_URL}/api`
 });
 
 // Request interceptor
@@ -33,7 +35,7 @@ api.interceptors.response.use(
         const token = localStorage.getItem('token');
         if (!token) throw new Error('No token available');
 
-        const response = await axios.post('/api/auth/refresh', { token });
+        const response = await axios.post(`${api.defaults.baseURL}/auth/refresh`, { token });
         const newToken = response.data?.data?.token;
 
         if (newToken) {
