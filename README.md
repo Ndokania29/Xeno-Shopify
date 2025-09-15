@@ -28,7 +28,7 @@ DB_NAME=xeno_shopify
 JWT_SECRET=supersecretkey
 EMAIL_USER=youremail@gmail.com
 EMAIL_PASS=yourapppassword
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=https://xeno-shopify-delta.vercel.app
 ```
 
 ### Frontend
