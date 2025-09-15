@@ -49,82 +49,10 @@ npm run dev         # http://localhost:5173
 
 The PlantUML source below can be rendered with any PlantUML-compatible tool. A simplified Mermaid flow is also included.
 
-```
-@startuml
-title High-Level Architecture - Xeno Shopify Data Ingestion & Insights
 
-actor "Shopify Store Owner" as User
+<img width="1021" height="762" alt="image" src="https://github.com/user-attachments/assets/b1c63984-c767-481e-8a0d-f4a68530216a" />
 
-rectangle "Frontend (Next.js / React)" {
-  component "Auth Pages\n(Login, Register,\nVerify Email, Reset)" as FE_Auth
-  component "Dashboard\n(Revenue, Funnel,\nMargin Insights)" as FE_Dashboard
-  component "Sync Page\n(Trigger sync,\nStatus View)" as FE_Sync
-  component "Settings\n(Store Info,\nAccount)" as FE_Settings
-}
 
-rectangle "Backend (Node.js + Express)" {
-  component "Auth Routes\nLogin, Register,\nJWT, Email Verify" as BE_Auth
-  component "Dashboard Routes\nOverview, Insights,\nFunnel, Profitability" as BE_Dashboard
-  component "Sync Routes\nFull Sync,\nOrders, Products,\nCustomers" as BE_Sync
-  component "Product Routes\nCRUD Products,\nPerformance Data" as BE_Products
-  component "Mailer Service\n(NodeMailer Gmail SMTP)" as BE_Mailer
-}
-
-database "MySQL Database" as DB
-rectangle "Shopify API" {
-  component "Orders API"
-  component "Products API"
-  component "Customers API"
-}
-
-User --> FE_Auth
-User --> FE_Dashboard
-User --> FE_Sync
-User --> FE_Settings
-
-FE_Auth --> BE_Auth : REST API (Axios + JWT)
-FE_Dashboard --> BE_Dashboard
-FE_Sync --> BE_Sync
-FE_Settings --> BE_Auth
-
-BE_Auth --> DB
-BE_Dashboard --> DB
-BE_Products --> DB
-BE_Sync --> DB
-
-BE_Sync --> "Shopify API"
-BE_Mailer --> User : Email Notifications
-
-@enduml
-```
-
-```mermaid
-flowchart TD
-
-    subgraph Frontend [Frontend – React/Vite]
-    A1[Login / Register] --> A2[Dashboard]
-    A2 --> A3[Sync Page]
-    A2 --> A4[Settings]
-    end
-
-    subgraph Backend [Backend – Node.js/Express]
-    B1[Auth Routes] --> DB[(MySQL Database)]
-    B2[Dashboard Routes] --> DB
-    B3[Sync Routes] --> ShopifyAPI
-    B4[Product Routes] --> DB
-    B5[Mailer Service] --> Email[SMTP/Gmail]
-    end
-
-    subgraph ShopifyAPI [Shopify API]
-    S1[Products]
-    S2[Orders]
-    S3[Customers]
-    end
-
-    Frontend -->|Axios + JWT| Backend
-    Backend -->|REST API| ShopifyAPI
-    Backend --> DB
-```
 
 ---
 
