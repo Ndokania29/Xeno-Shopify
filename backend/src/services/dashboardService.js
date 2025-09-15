@@ -66,6 +66,7 @@ async function getOverview(tenantId) {
     raw: true
   });
 
+
   const totalRevenue = safeNum(revenueRow.totalRevenue);
   const avgOrderValue = safeNum(revenueRow.avgOrderValue);
 
