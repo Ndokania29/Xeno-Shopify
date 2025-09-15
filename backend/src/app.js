@@ -18,35 +18,24 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const app = express();
 
 
-// CORS configuration
-const configuredOrigins = (process.env.CORS_ORIGINS || '')
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
-const defaultOrigins = ['http://localhost:5173', 'http://localhost:3000'];
-const staticWhitelist = [
-  ...defaultOrigins,
-  process.env.FRONTEND_URL
-].filter(Boolean);
-
+// CORS configuration - allow all origins (no credentials)
 app.use(cors({
-  // Reflects the request origin if in whitelist; allows non-browser clients (no origin)
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    const allowedOrigins = new Set([...staticWhitelist, ...configuredOrigins]);
-    if (allowedOrigins.size === 0) {
-      // If no origins are configured, allow all to unblock local/dev usage
-      return callback(null, true);
-    }
-    return allowedOrigins.has(origin) ? callback(null, true) : callback(null, false);
-  },
-  credentials: true,
+  origin: '*',
+  credentials: false,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Optional: respond quickly to CORS preflight
-app.options('*', cors());
+// Optional: respond to CORS preflight safely without wildcard route error in Express 5
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
