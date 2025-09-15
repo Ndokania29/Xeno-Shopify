@@ -1,0 +1,18 @@
+node_modules
+.env
+dist
+build
+.vscode
+.DS_Store
+npm
+yarn
+.idea
+coverage
+*.log
+*.tsbuildinfo
+.env.local
+.env.development
+.env.test
+.env.production
+# Ignore backend specific files
+backend/node_modules
